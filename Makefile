@@ -22,11 +22,12 @@ clean:
 server:
 	@echo "--> Running a server"
 	docker run -ti --net=host --rm \
-		-v $(PWD)/tests:/etc/chisel \
+		-v ${PWD}/tests:/etc/chisel \
 		${REGISTRY}/${AUTHOR}/${NAME}:${VERSION} \
 		server \
-		--key supersecret \
 		--authfile /etc/chisel/users_sample.json \
+		--key supersecret \
+		--port=9080 \
 		-v
 
 client:
@@ -37,5 +38,6 @@ client:
 		-e CHISEL_KEY=supersecret \
 		${REGISTRY}/${AUTHOR}/${NAME}:${VERSION} \
 		client \
-		:8080:google.co.uk:80 \
-		:8080:google.co.uk:443
+		127.0.0.1:9080 \
+		:10080:google.co.uk:80 \
+		:10443:google.co.uk:443

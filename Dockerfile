@@ -3,7 +3,7 @@ MAINTAINER HomeOffice Devops <devops@digital.homeoffice.gov.uk>
 
 ENV CHISEL_VERSION=1.3.1
 
-RUN dnf install curl -y && \
+RUN dnf --refresh install curl -y && \
     curl -sL https://github.com/jpillora/chisel/releases/download/${CHISEL_VERSION}/chisel_linux_amd64.gz | gzip -d -c > /bin/chisel && \
     chmod +x /bin/chisel && \
     groupadd -g 1000 chisel && \

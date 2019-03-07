@@ -22,6 +22,7 @@ pipeline:
       - docker push quay.io/ukhomeofficedigital/chisel:latest
     when:
       event: push
+      branch: master
 
   tagged_image_to_quay:
     image: docker:17.09.1

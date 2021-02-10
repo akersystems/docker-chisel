@@ -13,7 +13,7 @@ steps:
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   commands:
   - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
-  - docker build -t quay.io/ukhomeofficedigital/chisel:$${DRONE_COMMIT_SHA} .
+  - docker build -t quay.io/ukhomeofficedigital/dq-docker-chisel:$${DRONE_COMMIT_SHA} .
   when:
     event:
     - push
@@ -24,7 +24,7 @@ steps:
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
   settings:
     fail_on_detection: true
-    image_name: quay.io/ukhomeofficedigital/chisel:${DRONE_COMMIT_SHA}
+    image_name: quay.io/ukhomeofficedigital/dq-docker-chisel:${DRONE_COMMIT_SHA}
     tolarates: medium
   when:
     event:
@@ -36,9 +36,9 @@ steps:
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   commands:
   - docker login -u="ukhomeofficedigital+chisel" -p=$${DOCKER_PASSWORD} quay.io
-  - docker tag quay.io/ukhomeofficedigital/chisel:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/chisel:latest
-  - docker push quay.io/ukhomeofficedigital/chisel:$${DRONE_COMMIT_SHA}
-  - docker push quay.io/ukhomeofficedigital/chisel:latest
+  - docker tag quay.io/ukhomeofficedigital/dq-docker-chisel:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-docker-chisel:latest
+  - docker push quay.io/ukhomeofficedigital/dq-docker-chisel:$${DRONE_COMMIT_SHA}
+  - docker push quay.io/ukhomeofficedigital/dq-docker-chisel:latest
   environment:
     DOCKER_PASSWORD:
       from_secret: docker_password
@@ -53,8 +53,8 @@ steps:
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   commands:
   - docker login -u="ukhomeofficedigital+chisel" -p=$${DOCKER_PASSWORD} quay.io
-  - docker tag quay.io/ukhomeofficedigital/chisel:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/chisel:$${DRONE_TAG}
-  - docker push quay.io/ukhomeofficedigital/chisel:$${DRONE_TAG}
+  - docker tag quay.io/ukhomeofficedigital/dq-docker-chisel:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/dq-docker-chisel:$${DRONE_TAG}
+  - docker push quay.io/ukhomeofficedigital/dq-docker-chisel:$${DRONE_TAG}
   environment:
     DOCKER_PASSWORD:
       from_secret: docker_password
